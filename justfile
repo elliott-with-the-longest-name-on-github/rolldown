@@ -198,6 +198,11 @@ build-rolldown-test-dev-server:
 build-rolldown-wasi:
   vp run --filter rolldown build-wasi:debug
 
+# Build `rolldown` with the non-threaded `.wasm` binding.
+build-rolldown-wasi-single:
+  cd packages/rolldown && ./node_modules/.bin/oxnode ./build-binding.ts --target wasm32-wasip1 --no-default-features --features async-runtime
+  cd packages/rolldown && TARGET='rolldown-wasi' node --enable-source-maps --import @oxc-node/core/register -C dev ./build.ts
+
 # Build `rolldown` located in `packages/rolldown` itself and its `.node` binding in release mode.
 build-rolldown-release:
   vp run --filter rolldown build-native:release
